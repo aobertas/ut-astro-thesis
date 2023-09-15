@@ -1,0 +1,619 @@
+% \iffalse
+%<*driver>
+\ProvidesFile{ut-thesis.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<class>\ProvidesClass{ut-thesis}
+%<*class>
+[2023/02/08 v3.1.7 University of Toronto thesis class]
+%</class>
+%
+%<*driver>
+\documentclass[10pt]{ltxdoc}
+\usepackage[osf]{mathpazo}
+\usepackage[toc]{multitoc}
+\renewcommand*{\multicolumntoc}{2}
+\usepackage[margin=3cm,inner=5cm]{geometry}
+\usepackage{xcolor}
+\definecolor{code}{HTML}{990033}
+\definecolor{link}{HTML}{006699}
+\let\ottfamily\ttfamily
+\renewcommand{\ttfamily}{\color{code}\ottfamily}
+\renewcommand{\MacroFont}{\ttfamily\color{code}}
+\usepackage[colorlinks,linkcolor=link,urlcolor=link]{hyperref}
+\setlength{\skip\footins}{4ex}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\begin{document}
+  \DocInput{ut-thesis.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \GetFileInfo{ut-thesis.dtx}
+%
+% \title{The \textit{ut-thesis} class
+%   \thanks{\fileversion~[\filedate]\hfill
+%   \href{https://ctan.org/pkg/ut-thesis}{\texttt{https://ctan.org/pkg/ut-thesis}}\hfill
+%   \href{https://github.com/jessexknight/ut-thesis}{\texttt{github.com/jessexknight/ut-thesis}}}}
+% \author{
+%   Francois Pitt,
+%   Jesse Knight
+%     \thanks{maintainer, contact:
+%     \href{mailto:jesse.knight@mail.utoronto.ca}
+%          {\texttt{jesse.knight@mail.utoronto.ca}}}
+% }
+%
+% \maketitle
+%
+% \begin{abstract}\noindent
+%   The \textit{ut-thesis} document class implements the formatting requirements of
+%   the University of Toronto School of Graduate Studies (SGS),
+%   as of Fall 2020.
+% \end{abstract}
+%
+% {\footnotesize\setlength{\parskip}{3pt}\tableofcontents}
+% \clearpage
+%
+% \section{Installation}\label{inst}
+%
+% There are two main options to start using the class:
+% \begin{itemize}
+%   \item \textbf{installing}: The \textit{ut-thesis} class is available
+%         under the major \LaTeX\ distributions (Linux: TeX Live, macOS: MacTeX, Windows: MiKTeX).
+%         Installation steps will depend on the distribution; some helpful information is
+%         \href{https://en.wikibooks.org/wiki/LaTeX/Installing_Extra_Packages}{here}.
+%         Within TeX Live, \textit{ut-thesis} is part of the
+%         \href{https://packages.ubuntu.com/kinetic/all/texlive-publishers/filelist}
+%         {publishers} bundle, so it should be available on Overleaf.
+%   \item \textbf{local file}: Place the file |ut-thesis.cls| in your project directory.
+%         The class will only be available in this directory.
+%         This works if you don't have write access in the \LaTeX\ distribution,
+%         or if you want to use an updated version of the class.
+% \end{itemize}
+%
+% \section{Usage}\label{use}
+%
+% |\documentclass{ut-thesis}|\\
+% |\documentclass[ <options> ]{ut-thesis}|
+%
+% The default options produce a final copy, ready for submission to
+% the University of Toronto School of Graduate Studies (SGS).
+% There is some example code on
+% \href{https://github.com/jessexknight/ut-thesis/tree/master/test}{GitHub}.
+%
+% \subsection{Options}\label{use:opt}
+%
+% The default class options are denoted like |option*|.
+%
+% \subsubsection{Font Size}\label{use:opt:fontsize}
+%
+% \begin{macro}{[10pt*]}
+% \begin{macro}{[11pt]}
+% \begin{macro}{[12pt]}
+%   The three standard font sizes are supported.
+%   SGS requires at least 10\,pt font for the text,
+%   but captions, footnotes, etc.\ can be smaller.
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Line Spacing}\label{use:opt:spacing}
+%
+% \begin{macro}{[singlespacing]}
+% \begin{macro}{[onehalfspacing*]}
+% \begin{macro}{[doublespacing]}
+%   Three options are available for line spacing.
+%   Note that |[singlespacing]| does not conform to the SGS guidelines,
+%   but we provide it in case you ever prefer it while writing.
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsubsection{Margins}\label{use:opt:margins}
+%
+% We aim to support both digital and print copies of the thesis,
+% with two aspects affected:
+% \begin{enumerate}
+%   \item whether margins are equal (digital) or unequal (print),
+%         where unequal margins include a wider inner margin for binding
+%   \item whether pages will be printed on one or both sides,
+%         essentially only relevant for print copies
+% \end{enumerate}
+%
+% \begin{macro}{[equalmargins*]}
+%   The inner and outer margins are averaged
+%   to keep the |\textwidth| consistent with the |[unequalmargins]| option.
+% \end{macro}
+%
+% \begin{macro}{[unequalmargins]}
+%   The outer margin is equal to the top and bottom margins;
+%   the inner margin is 0.50~inches wider than the outer margin.
+% \end{macro}
+%
+% \begin{macro}{[oneside*]}
+%   All pages behave as if they open to the right (wider left margin);
+%   no extra blank pages.
+% \end{macro}
+%
+% \begin{macro}{[twoside]}
+%   Most pages will alternate opening to the right and left;
+%   however, some commands which create new pages
+%   will always open to the right,
+%   sometimes requiring a blank page before to do so.
+%   See the |book| class for more information, as well as
+%   details about the |[openright*]| and |[openany]| options.
+% \end{macro}
+%
+% Four widths of margins are defined based on
+% the inner (left) and outer (right/top/bottom) dimensions.
+% If |[equalmargins]| is used, the left/right margins are averaged.
+%
+% \begin{macro}{[narrowmargins]}
+%   Inner: 1.25 inch; outer: 0.75 inch
+%   (minimum SGS requirements)
+% \end{macro}
+% \begin{macro}{[normalmargins*]}
+%   Inner: 1.50 inch; outer: 1.00 inch
+% \end{macro}
+% \begin{macro}{[widemargins]}
+%   Inner: 1.75 inch; outer: 1.25 inch
+% \end{macro}
+% \begin{macro}{[extrawidemargins]}
+%   Inner: 2.00 inch; outer: 1.50 inch
+% \end{macro}
+%
+% \subsubsection{Book Options}\label{use:opt:book}
+%
+% This class inherits from the standard \LaTeX\ |book| class,
+% so all other |book| options are processed by that class.
+% Two caveats are that |[titlepage]|/|[notitlepage]| have no effect and
+% |[twocolumn]| has undefined behaviour.
+%
+% \subsection{Commands}\label{use:cmd}
+%
+% \subsubsection{Author Information}\label{use:cmd:author}
+%
+% The following 5 commands should be used in the preamble
+% to define the content of the titlepage (|\maketitle|)
+% and abstract page (|abstract| environment).
+%
+% \begin{macro}{\author}
+%   Your full name.
+% \end{macro}
+%
+% \begin{macro}{\title}
+%   The title of your thesis.
+% \end{macro}
+%
+% \begin{macro}{\degree}
+%   The title of your degree (spelled out, like ``Doctor of Philosophy'' not ``PhD'').
+% \end{macro}
+%
+% \begin{macro}{\gradyear}
+%   The year of your degree completion.
+% \end{macro}
+%
+% \begin{macro}{\department}
+%   The name of your department.
+%   The optional first argument (|\department[this]{}|)
+%   can be used to replace or leave blank
+%   the default text ``Department of'' preceeding the department name.
+% \end{macro}
+%
+% If undefined, template values are used like ``(author)''.
+%
+% \begin{macro}{\copyrighttext}
+%   The copyright text printed on the titlepage.
+%   The default, which can be overwritten if needed, is:
+%   |{\copyright} Copyright {\@gradyear} by {\@author}|.
+% \end{macro}
+%
+% \subsubsection{Document Parts}\label{use:cmd:parts}
+%
+% From the |book| class, four commands can be used to divide the document into major parts.
+% These should be used in the order they appear here, as needed.
+% The first two commands are necessary for the required SGS page numbering style.
+%
+% \begin{macro}{\frontmatter}
+%   Turns off chapter numbers, uses roman numerals for page numbers.\\
+%   Suggested use: immediately after |\begin{document}|.
+% \end{macro}
+%
+% \begin{macro}{\mainmatter}
+%   Turns on chapter numbers, uses arabic numerals for page numbers.\\
+%   Suggested use: immediately before the first main |\chapter{}| command.
+% \end{macro}
+%
+% \begin{macro}{\appendix}
+%   Uses letters for chapter numbers, no change to page numbers.\\
+%   Suggested use: immediately before the first appendix |\chapter{}| command.
+% \end{macro}
+%
+% \begin{macro}{\backmatter}
+%   Turns off chapter numbers, no change to page numbers.\\
+%   Suggested use: immediately before |\printbibliography| or |\bibliography{}|.
+% \end{macro}
+%
+% \subsubsection{Front Matter}\label{use:cmd:front}
+%
+% From the |book| class, the following commands are available to generate the frontmatter.
+% These should be used in the order they appear here, as needed.
+%
+% \begin{macro}{\maketitle}
+%   Creates the title page according to SGS requirements,
+%   and adds a blank page following if using |[twoside]|.
+% \end{macro}
+%
+% (The abstract page should appear here;
+% see \S~\ref{use:env:abs}).
+%
+% (The dedication and acknowledgements should appear here, as needed;
+% see \S~\ref{use:env:ded-ackn}).
+%
+% \begin{macro}{\tableofcontents}
+%   Prints the table of contents, starting on a new page.
+% \end{macro}
+%
+% \begin{macro}{\listoftables}
+%   Prints the table of tables, starting on a new page.
+% \end{macro}
+%
+% \begin{macro}{\listoffigures}
+%   Prints a table of figures, starting on a new page.
+% \end{macro}
+%
+% \subsection{Environments}\label{use:env}
+%
+% \subsubsection{Abstract}\label{use:env:abs}
+%
+% \begin{macro}{abstract}
+%   Creates the abstract page according to SGS requirements,
+%   and adds a blank page if using |[twoside]|.
+%   The abstract content should be added within the environment,
+%   and should be no more than
+%   350 words for a PhD thesis or
+%   150 words for a Master's thesis.
+%   We do not provide tools for counting words.
+% \end{macro}
+%
+% \subsubsection{Dedication \& Acknowledgements}\label{use:env:ded-ackn}
+%
+% \begin{macro}{dedication}
+%   The |dedication| environment formats text flush right and 1/3 down a new page.
+%   Not necessary for SGS requirements, so you can redefine this environment.
+% \end{macro}
+%
+% \begin{macro}{acknowledgements}
+%   The |acknowledgements| environment creates a centered heading using |\section*{}|,
+%   and a new page after the text.
+%   Not necessary for SGS requirements, so you can redefine this environment.
+% \end{macro}
+%
+% \subsubsection{Base Environments}\label{use:env:misc}
+%
+% As in the |book| class, the base environments
+% like |figure|, |table|, and |equation| are sub-numbered
+% within the current chapter like ``(2.1)'' for Equation~1 in Chapter~2.
+% The behaviour is equivalent to: |\counterwithin{equation}{section}|,
+% and can be undone with: |\counterwithout{equation}{section}|.
+%
+% For sub-figures, we recommend the |subcaption| package.
+%
+% The |quote| and |quotation| environments from the |book| class are also available.
+%
+% \clearpage
+%
+% \section{Implementation}\label{imp}
+%
+% \subsection{Margin Math}\label{imp:margins}
+%
+% First, we define a boolean |margins@equal| to store
+% whether margins should be equal or not, plus
+% two lengths to help us compute the margins:
+% |\margin@base| is the minimum used directly for the top and bottom, and
+% |\margin@offset| is the difference between inner/outer margins
+% if they are not equal.
+%
+%    \begin{macrocode}
+\newif\ifmargins@equal
+\newlength{\margin@base}
+\newlength{\margin@offset}
+\setlength{\margin@offset}{0.5in}
+%    \end{macrocode}
+%
+% After processing all options,
+% we compute the margins using the above lengths,
+% and adjust the placement of the header, footer, and margin notes.
+% If margins are equal, we average |\margin@offset|
+% to keep the |\textwidth| consistent with the unequal case.
+%
+%    \begin{macrocode}
+\AtEndOfClass{
+  \ifmargins@equal
+    \setlength{\leftmargin}{\dimexpr\margin@base+.5\margin@offset}
+    \setlength{\rightmargin}{\dimexpr\margin@base+.5\margin@offset}
+  \else
+    \setlength{\leftmargin}{\dimexpr\margin@base+\margin@offset}
+    \setlength{\rightmargin}{\dimexpr\margin@base}
+  \fi
+  \geometry{
+    top      = \margin@base,
+    bottom   = \margin@base,
+    inner    = \leftmargin,
+    outer    = \rightmargin,
+    headsep  = \dimexpr0.5\margin@base-\headheight,
+    footskip = \dimexpr0.5\margin@base,
+    marginparwidth = \dimexpr\rightmargin-0.25in,
+    marginparsep   = 0.125in,
+}}
+%    \end{macrocode}
+%
+% \subsection{Option Declaration}\label{imp:opt}
+%
+% \subsubsection{Margins}\label{imp:opt:margins}
+%
+% Four margin width options are based on |\margin@base|:
+%
+%    \begin{macrocode}
+\DeclareOption{narrowmargins}   {\setlength{\margin@base}{0.75in}}
+\DeclareOption{normalmargins}   {\setlength{\margin@base}{1.00in}}
+\DeclareOption{widemargins}     {\setlength{\margin@base}{1.25in}}
+\DeclareOption{extrawidemargins}{\setlength{\margin@base}{1.50in}}
+%    \end{macrocode}
+%
+% Setting the margins either equal or unequal:
+%
+%    \begin{macrocode}
+\DeclareOption{equalmargins}{\margins@equaltrue}
+\DeclareOption{unequalmargins}{\margins@equalfalse}
+%    \end{macrocode}
+%
+% \subsubsection{Line Spacing}\label{imp:opt:spacing}
+%
+% We're using the |setspace| package.
+% We simply call one of the spacing commands after the class is loaded.
+% So, be careful to place any line spacing commands within a group,
+% or the global setting can be changed in the middle of the document.
+%
+%    \begin{macrocode}
+\DeclareOption{doublespacing}{%
+  \AtEndOfClass{\doublespacing}
+}
+\DeclareOption{onehalfspacing}{%
+  \AtEndOfClass{\onehalfspacing}
+}
+\DeclareOption{singlespacing}{%
+  \AtEndOfClass{\singlespacing}
+}
+%    \end{macrocode}
+%
+% \subsubsection{Book Options}\label{imp:opt:misc}
+%
+% We need to redeclare the |oneside| option from |book| so that
+% it can be used as a default:
+%
+%    \begin{macrocode}
+\DeclareOption{oneside}{\PassOptionsToClass{oneside}{book}}
+%    \end{macrocode}
+%
+% Finally, we try to process all remaining options using the |book| class,
+% so the usual options and default values should be defined, like:
+% \begin{itemize}
+%   \item font size: e.g. |10pt|, |11pt|, |12pt|
+%   \item sides: e.g. |oneside|, |twoside|
+%   \item open side for twoside: e.g. |openright|, |openany|
+% \end{itemize}
+%
+%    \begin{macrocode}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+%    \end{macrocode}
+%
+% \subsubsection{Default Options \& Processing}\label{imp:opt:proc}
+%
+% Executing the default options and processing.
+% Any remaining options should now raise an error like:
+% |LaTeX Warning: Unused global option(s): ...|
+%
+%    \begin{macrocode}
+\ExecuteOptions{onehalfspacing,normalmargins,equalmargins,oneside}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% \subsection{Loading Dependencies}\label{imp:load}
+%
+% We load the |book| class and the required packages.
+%
+%    \begin{macrocode}
+\LoadClass{book}
+\RequirePackage{geometry} % for margins etc.
+\RequirePackage{setspace} % for line spacing
+%    \end{macrocode}
+%
+% \subsection{Author Information}\label{imp:author}
+%
+% Getting the user inputs.
+%
+%    \begin{macrocode}
+\renewcommand*{\author}  [1]{\gdef\@author{#1}}
+\renewcommand*{\title}   [1]{\gdef\@title{#1}}
+\newcommand*{\degree}    [1]{\gdef\@degree{#1}}
+\newcommand*{\gradyear}  [1]{\gdef\@gradyear{#1}}
+\newcommand*{\department}[2][Department of]%
+  {\gdef\@deptpre{#1}\gdef\@deptname{#2}}
+\newcommand*{\copyrighttext}[1]{\gdef\@copyrighttext{#1}}
+%    \end{macrocode}
+%
+% Setting default values that will mostly be overwritten.
+%
+%    \begin{macrocode}
+\author    {(author)}
+\title     {(title)}
+\degree    {(degree)}
+\gradyear  {(gradyear)}
+\department{(department)}
+\copyrighttext{{\copyright} Copyright {\@gradyear} by {\@author}}
+%    \end{macrocode}
+%
+% \subsection{Front Matter}\label{imp:front}
+%
+% \subsubsection{Matter Commands}\label{imp:front:pp}
+%
+% We enforce that the |\frontmatter| and |\mainmatter| use the right
+% page numbering and styles.
+%
+%    \begin{macrocode}
+\g@addto@macro\frontmatter{\pagenumbering{roman}\pagestyle{plain}}
+\g@addto@macro\mainmatter {\pagenumbering{arabic}\pagestyle{headings}}
+%    \end{macrocode}
+%
+% \subsubsection{Title Page}\label{imp:front:title}
+%
+% We don't enforce firm distances between lines,
+% but use |\vfill| to stretch and fill the space evenly,
+% except for a double-sized gap after the author name.
+% There is one part of space above the title,
+% while the copyright is pushed all the way to the bottom.
+%
+%    \begin{macrocode}
+\renewcommand*{\maketitle}%
+  {\thispagestyle{empty}
+   \begin{center}
+      \large
+      \singlespacing
+      \null
+      \vfill
+      \textsc{\@title}
+      \vfill
+      by
+      \vfill
+      {\@author}
+      \vfill
+      \vfill
+      A thesis submitted in conformity with the requirements\\
+      for the degree of {\@degree}\\[1ex]
+      {\@deptpre} {\@deptname}\\
+      University of Toronto\\
+      \vfill
+      {\@copyrighttext}
+   \end{center}
+   {{\pagestyle{empty}\ocleardoublepage}}
+  }
+%    \end{macrocode}
+%
+% \subsubsection{Abstract Page}\label{imp:front:abs}
+%
+% The abstract is an environment, but it creates its own page
+% (and possibly an extra empty page if using |twoside|).
+% The author and title info is centered and singlespaced.
+% The word ``Abstract'' uses the |\section*| style, without any numbering.
+% The abstract content is doublespaced.
+%
+%    \begin{macrocode}
+\newenvironment*{abstract}%
+  {\thispagestyle{plain}
+   \begin{center}
+     \singlespacing
+      {\@title}\\[2ex]
+      {\@author}\\
+      {\@degree}\\[1ex]
+      {\@deptpre} {\@deptname}\\
+      University of Toronto\\
+      {\@gradyear}\\
+      \section*{Abstract}
+   \end{center}
+   \begingroup
+   \doublespacing}%
+  {\par\endgroup\cleardoublepage}
+%    \end{macrocode}
+%
+% \subsubsection{Dedication}\label{imp:front:ded}
+%
+% As described above.
+%
+%    \begin{macrocode}
+\newenvironment*{dedication}%
+  {\thispagestyle{plain}
+   \null
+   \vfill
+   \begin{flushright}}%
+  {\end{flushright}
+   \vfill
+   \vfill
+   \clearpage}
+%    \end{macrocode}
+%
+% \subsubsection{Acknowledgements}\label{imp:front:ackn}
+%
+% As described above.
+%
+%    \begin{macrocode}
+\newenvironment*{acknowledgements}%
+  {\thispagestyle{plain}
+   \begin{center}
+   \section*{Acknowledgements}
+   \end{center}
+   \begingroup}%
+  {\endgroup\clearpage}
+%    \end{macrocode}
+%
+% \subsection{Page Styles}\label{imp:hf}
+%
+% \subsubsection{Blank Pages}\label{imp:hf:blank}
+%
+% By default, all blank pages will have page style |plain|,
+% but the original definition is stored in |\ocleardoublepage|.
+%
+%    \begin{macrocode}
+\let\ocleardoublepage\cleardoublepage
+\def\cleardoublepage{{\newpage\pagestyle{plain}\ocleardoublepage}}
+%    \end{macrocode}
+%
+% \subsubsection{Headers \& Footers}\label{imp:hf:hf}
+%
+% We redefine the |headings| page style
+% with a new formatting hook |\headerstyle{}|,
+% but is otherwise similar to the original |headings|.
+%
+%    \begin{macrocode}
+\newcommand{\headerstyle}[1]{\footnotesize\MakeUppercase{#1}}
+\if@twoside
+\renewcommand*{\ps@headings}%
+  {\let\@mkboth\markboth
+   \let\@oddfoot\@empty
+   \let\@evenfoot\@empty
+   \def\@oddhead{\headerstyle{\rightmark\hfil\thepage}}%
+   \def\@evenhead{\headerstyle{\thepage\hfil\leftmark}}%
+   \def\chaptermark##1{\markboth{%
+     \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}{}}
+   \def\sectionmark##1{\markright{%
+     \if@mainmatter\headerstyle{\thesection.\ ##1}\fi}}}
+\else
+\renewcommand*{\ps@headings}%
+  {\let\@mkboth\markboth
+   \let\@oddfoot\@empty
+   \let\@evenfoot\@empty
+   \def\@oddhead{\headerstyle{\rightmark\hfil\thepage}}%
+   \def\chaptermark##1{\markright{%
+     \if@mainmatter\headerstyle{\@chapapp\ \thechapter.\ ##1}\fi}}}
+\fi
+%    \end{macrocode}
+%
+% Default page style.
+%
+%    \begin{macrocode}
+\pagestyle{headings}
+%    \end{macrocode}
+%
+% \subsection{Spacing Adjustments}\label{imp:adj}
+%
+% The default spacing below captions is too small
+% for captions on top of floats (e.g.\ for tables),
+% so we make it consistent above and below.
+%
+%    \begin{macrocode}
+\setlength\abovecaptionskip{1ex}
+\setlength\belowcaptionskip{1ex}
+%    \end{macrocode}
+%
+\endinput

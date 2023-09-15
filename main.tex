@@ -1,0 +1,122 @@
+% !TeX TS-program = pdflatex
+% !BIB TS-program = biber
+% !TeX root = main.tex
+
+% This template has been adapted from Jesse Knight's ut-thesis template
+% https://github.com/jessexknight/ut-thesis
+
+% if you're looking for a helpful reference for latex syntax stuff, I recommend this wikibook
+% https://en.wikibooks.org/wiki/LaTeX
+% but you can also google things; someone's probably asked about it on StackExchange
+
+% If you'd like to look at PDFs of past theses in the department, Kristen Menou kindly shared this link with me 
+% I recommend taking a look at some just to get a sense of structure and formatting
+% http://www.astro.utoronto.ca/AALibrary/theses.html
+
+\documentclass{ut-thesis}
+
+% uncomment these lines if you want subsubsections to be numbered and show up in the table of contents
+% \setcounter{secnumdepth}{3}
+% \setcounter{tocdepth}{3}
+
+% bibliography
+\usepackage[round,authoryear]{natbib} % I've changed the bibstyle from the original template; SGS guidelines say you can use a citation/reference format common to the field
+\bibliographystyle{plainnat}
+
+% packages
+\usepackage{graphicx} % for embedding graphics
+\usepackage{booktabs} % for pretty tables
+\usepackage{lipsum} % for gibberish text
+\usepackage{epigraph}
+\usepackage{amsmath, amssymb, amsfonts, wasysym}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{appendix}
+
+%%%
+% Thank you Emily Deibert for sharing this latex preamble block with me
+\usepackage{xcolor}
+\definecolor{clickcolor}{RGB}{46,48,118}
+\definecolor{starcolor}{RGB}{255,216,0}
+\usepackage{hyperref}
+\hypersetup{
+    % bookmarks=false,
+    unicode=true,
+    pdftoolbar=false, 
+    pdfmenubar=true,
+    pdffitwindow=true,
+    pdfstartview={FitH},
+    pdftitle={PhD thesis},
+    pdfauthor={First Name},
+    pdfsubject={title},
+    pdfcreator={First Name},
+    pdfproducer={Alysa Obertas},
+    pdfkeywords={Astronomy, Astrophysics, Cool Space Stuff},
+    pdfnewwindow=true,
+    colorlinks=true,
+    linkcolor=clickcolor,
+    citecolor=magenta,
+    urlcolor=clickcolor
+    }
+%%%
+
+%%% subappendices environment so each chapter can have its own appendix
+% i.e. if your chapters are papers which each have their own appendices, this will allow them to show up in the table of contents after their corresponding chapter
+% I'll caution that if you have subsections in your appendix, they'll be written as e.g. 3A.1.1 and this comes up right against the title in the TOC; maybe you can play with the hspace (I didn't try to fix it)
+
+\AtBeginEnvironment{subappendices}{%
+    \chapter*{Appendix - Chapter~\thechapter}
+    \addcontentsline{toc}{chapter}{\hspace{1.5em}Appendices  - Chapter~\thechapter}
+    \counterwithin{figure}{section}
+    \counterwithin{table}{section}
+}
+
+% End of subappendices environment
+\AtEndEnvironment{subappendices}{%
+\counterwithout{figure}{section}
+\counterwithout{table}{section}
+}
+
+% commands
+
+\newcommand{\edit}[1]{{\color{teal} #1}} % I used this for post-defense revisions so my supervisor could easily find and see my changes
+
+% author data
+\author{First Middle Name} % I think SGS says to list your name in full as they have in their records; I don't publish with my middle name, but I'm registered with it
+\title{Cool Space Stuff}
+\degree{Doctor of Philosophy}
+\department[]{David A. Dunlap Department of Astronomy and Astrophysics}
+\gradyear{2023}
+\begin{document}
+  \frontmatter
+    \maketitle
+    \begin{abstract}
+      \input{abstract}
+    \end{abstract}
+    \begin{dedication}
+      Dedications go here.
+    \end{dedication}
+    \begin{acknowledgements}
+      Acknowledgements go here.
+    \end{acknowledgements}
+    \tableofcontents
+    \listoftables
+    \addcontentsline{toc}{section}{List of Tables}
+    \listoffigures
+    \addcontentsline{toc}{section}{List of Figures}
+  \mainmatter
+    \input{ch-intro}
+    \input{ch-paper1}
+    %\input{ap-paper1} % this is optional depending on whether your chapter/paper has its own appendix
+    \input{ch-paper2}
+    \input{ap-paper2}
+    % I only had two papers for my main chapters, but you can just add as many as needed
+    \input{ch-conclusions}
+  \appendix
+    \input{ap-code} % I didn't have this in mine, but I've included it for completeness
+  \backmatter
+  % this is because I'm using natbib; see Jesse Knight's original template for bibtex notation
+  \bibliography{main}
+  \addcontentsline{toc}{chapter}{Bibliography}
+\end{document}
